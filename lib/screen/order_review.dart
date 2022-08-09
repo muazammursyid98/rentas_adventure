@@ -3,9 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:rentas_adventure/screen/payment_gateway.dart';
 import 'package:rentas_adventure/utils/size_config.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../model/activity_model.dart';
 import '../model/session_model.dart';
+import 'dart:js' as js;
 
 class OrderReview extends StatefulWidget {
   final Record recordActivity;
@@ -26,9 +28,18 @@ class OrderReview extends StatefulWidget {
 }
 
 class _OrderReviewState extends State<OrderReview> {
+  String url = "https://rentasadventures.com/API/payment_gateway.php";
+
   @override
   void initState() {
     super.initState();
+  }
+
+  Future<void> _launchInBrowser() async {
+    if (await canLaunch(url)) {
+      await launch(url, forceSafariVC: true);
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -236,7 +247,7 @@ class _OrderReviewState extends State<OrderReview> {
                                       borderRadius: BorderRadius.zero,
                                     ),
                                   )),
-                              onPressed: () {
+                              onPressed: () async {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

@@ -4,9 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:rentas_adventure/provider/rest.dart';
 import 'package:rentas_adventure/screen/submission_date.dart';
 import 'package:rentas_adventure/utils/size_config.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter_web/webview_flutter_web.dart';
 import 'model/activity_model.dart';
 
 void main() {
+  WebView.platform = WebWebViewPlatform();
   runApp(const MyApp());
 }
 
