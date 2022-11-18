@@ -21,8 +21,8 @@ class Activity {
         records: json["records"] == null
             ? null
             : List<Record>.from(json["records"].map((x) => Record.fromJson(x))),
-        message: json["message"] == null ? null : json["message"],
-        reason: json["reason"] == null ? null : json["reason"],
+        message: json["message"],
+        reason: json["reason"],
       );
 }
 
@@ -33,6 +33,7 @@ class Record {
     this.activityAvailable,
     this.activityLocation,
     this.activityAsset,
+    this.activityPrice,
   });
 
   String? activityId;
@@ -40,17 +41,14 @@ class Record {
   String? activityAvailable;
   String? activityLocation;
   String? activityAsset;
+  String? activityPrice;
 
   factory Record.fromJson(Map<String, dynamic> json) => Record(
-        activityId: json["activityId"] == null ? null : json["activityId"],
-        activityName:
-            json["activityName"] == null ? null : json["activityName"],
-        activityAvailable: json["activityAvailable"] == null
-            ? null
-            : json["activityAvailable"],
-        activityLocation:
-            json["activityLocation"] == null ? null : json["activityLocation"],
-        activityAsset:
-            json["activityAsset"] == null ? null : json["activityAsset"],
+        activityId: json["activityId"],
+        activityName: json["activityName"],
+        activityAvailable: json["activityAvailable"],
+        activityLocation: json["activityLocation"],
+        activityAsset: json["activityAsset"],
+        activityPrice: json["activityPrice"],
       );
 }

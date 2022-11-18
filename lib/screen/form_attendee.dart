@@ -4,25 +4,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:rentas_adventure/screen/order_review.dart';
 import 'package:rentas_adventure/utils/size_config.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../model/activity_model.dart';
 import '../model/session_model.dart';
 import '../widget/input_text.dart';
 
 class FormAttendeeScreen extends StatefulWidget {
-  final Record recordActivity;
-  final DateTime selectDate;
-  final int personToJoin;
-  final int? currentStage;
-  final Session? currentSelected;
-
   const FormAttendeeScreen({
     Key? key,
-    required this.recordActivity,
-    required this.selectDate,
-    required this.personToJoin,
-    this.currentStage,
-    this.currentSelected,
   }) : super(key: key);
 
   @override
@@ -45,29 +35,39 @@ class _FormAttendeeScreenState extends State<FormAttendeeScreen> {
 
   List<Widget> columnDynamic = [];
 
+  ScrollController scollBarController = ScrollController();
+
   @override
   void initState() {
     super.initState();
-    selectDate = widget.selectDate;
-    personToJoin = widget.personToJoin;
-    currentStage = widget.currentStage ?? 1;
+
     dynamicView();
   }
 
   void dynamicView() {
     //  columnDynamic.add(registrantColumn());
 
-    for (var i = 0; i < personToJoin; i++) {
-      final jsonsLocal = [
-        {
-          "name": "",
-          "phone_number": "",
-          "email_address": "",
-        }
-      ];
-      jsons.addAll(jsonsLocal);
-      columnDynamic.add(attendee1(i, i + 1));
-    }
+    // for (var i = 0; i < personToJoin; i++) {
+    //   final jsonsLocal = [
+    //     {
+    //       "name": "",
+    //       "phone_number": "",
+    //       "email_address": "",
+    //     }
+    //   ];
+    //   jsons.addAll(jsonsLocal);
+    //   columnDynamic.add(attendee1(i, i + 1));
+    // }
+
+    final jsonsLocal = [
+      {
+        "name": "",
+        "phone_number": "",
+        "email_address": "",
+      }
+    ];
+    jsons.addAll(jsonsLocal);
+    columnDynamic.add(attendee1(0, 1));
   }
 
   Column registrantColumn() {
@@ -79,10 +79,10 @@ class _FormAttendeeScreenState extends State<FormAttendeeScreen> {
           currentStage == 1 ? "REGISTRANT" : "Atendee $currentStage",
           textAlign: TextAlign.center,
           style: GoogleFonts.montserrat(
-            textStyle: const TextStyle(
+            textStyle: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
-              fontSize: 20,
+              fontSize: 18.sp,
             ),
           ),
         ),
@@ -142,13 +142,13 @@ class _FormAttendeeScreenState extends State<FormAttendeeScreen> {
       children: [
         SizedBox(height: getProportionateScreenHeight(20)),
         Text(
-          "ATTENDEE $display",
+          "REGISTRANT",
           textAlign: TextAlign.center,
           style: GoogleFonts.montserrat(
-            textStyle: const TextStyle(
+            textStyle: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
-              fontSize: 20,
+              fontSize: 18.sp,
             ),
           ),
         ),
@@ -224,167 +224,242 @@ class _FormAttendeeScreenState extends State<FormAttendeeScreen> {
         ),
         Container(
           margin: EdgeInsets.only(
-              top: 60,
-              bottom: 60,
-              left: MediaQuery.of(context).size.width >= 800
-                  ? 200
-                  : MediaQuery.of(context).size.width >= 500
-                      ? 40
-                      : 20,
-              right: MediaQuery.of(context).size.width >= 800
-                  ? 200
-                  : MediaQuery.of(context).size.width >= 500
-                      ? 40
-                      : 20),
+            top: 5.h,
+            bottom: 5.h,
+            left: 10.w,
+            right: 10.w,
+          ),
           child: Scaffold(
             body: SafeArea(
               child: Scrollbar(
+                controller: scollBarController,
                 radius: const Radius.circular(5),
                 interactive: true,
-                isAlwaysShown: true,
-                child: ListView(
+                child: Column(
                   children: [
-                    Stack(
-                      children: [
-                        Container(
-                          height: getProportionateScreenHeight(130),
-                          width: double.infinity,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                    Expanded(
+                      child: ListView(
+                        children: [
+                          Stack(
                             children: [
-                              Expanded(
-                                flex: 2,
-                                child: Center(
-                                  child: CircularPercentIndicator(
-                                    radius: 40.0,
-                                    lineWidth: 4.0,
-                                    animation: false,
-                                    percent: 0.4,
-                                    center: const Text(
-                                      "1 of 2",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14.0),
-                                    ),
-                                    circularStrokeCap: CircularStrokeCap.round,
-                                    progressColor: Colors.blue,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                flex: 3,
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "Submission Attendee",
-                                        style: GoogleFonts.montserrat(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 16),
-                                      ),
-                                      Text(
-                                        "${widget.recordActivity.activityName}",
-                                        style: GoogleFonts.montserrat(
-                                          textStyle: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12,
+                              Container(
+                                height: getProportionateScreenHeight(130),
+                                width: double.infinity,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Center(
+                                        child: CircularPercentIndicator(
+                                          radius: 7.h,
+                                          lineWidth: 6.0,
+                                          animation: false,
+                                          percent: 0.4,
+                                          center: Text(
+                                            "1 of 2",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16.sp),
                                           ),
+                                          circularStrokeCap:
+                                              CircularStrokeCap.round,
+                                          progressColor: Colors.blue,
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                    Expanded(
+                                      flex: 3,
+                                      child: Center(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "Submission Attendee",
+                                              style: GoogleFonts.montserrat(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16.sp),
+                                            ),
+                                            // Text(
+                                            //   "${widget.recordActivity.activityName}",
+                                            //   style: GoogleFonts.montserrat(
+                                            //     textStyle: TextStyle(
+                                            //       color: Colors.black,
+                                            //       fontWeight: FontWeight.w500,
+                                            //       fontSize: 16.sp,
+                                            //     ),
+                                            //   ),
+                                            // ),
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  ],
                                 ),
-                              )
+                              ),
+                              // Positioned(
+                              //   top: getProportionateScreenHeight(10),
+                              //   right: getProportionateScreenWidth(10),
+                              //   child: GestureDetector(
+                              //     onTap: () {
+                              //       Navigator.pop(context);
+                              //     },
+                              //     child: SafeArea(
+                              //       child: Text(
+                              //         "Back",
+                              //         style: GoogleFonts.montserrat(
+                              //             color: Colors.green,
+                              //             fontWeight: FontWeight.w600,
+                              //             fontSize: 14),
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           ),
-                        ),
-                        Positioned(
-                          top: getProportionateScreenHeight(10),
-                          right: getProportionateScreenWidth(10),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: SafeArea(
+                          Container(
+                            padding: EdgeInsets.all(20),
+                            width: double.infinity,
+                            color: Color.fromARGB(255, 219, 219, 219),
+                            child: Form(
+                              key: _formKey,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: columnDynamic,
+                              ),
+                            ),
+                          ),
+
+                          // Padding(
+                          //   padding: EdgeInsets.only(
+                          //       left: getProportionateScreenWidth(20),
+                          //       right: getProportionateScreenWidth(20)),
+                          //   child: SizedBox(
+                          //     height: getProportionateScreenHeight(50),
+                          //     width: double.infinity,
+                          //     child: ElevatedButton(
+                          //       style: ButtonStyle(
+                          //           foregroundColor: MaterialStateProperty.all<Color>(
+                          //               Colors.white),
+                          //           backgroundColor: MaterialStateProperty.all<Color>(
+                          //             const Color.fromARGB(255, 0, 94, 172),
+                          //           ),
+                          //           shape: MaterialStateProperty.all<
+                          //               RoundedRectangleBorder>(
+                          //             const RoundedRectangleBorder(
+                          //               borderRadius: BorderRadius.zero,
+                          //             ),
+                          //           )),
+                          //       onPressed: () {
+                          //         if (_formKey.currentState!.validate()) {
+                          //           Navigator.push(
+                          //             context,
+                          //             MaterialPageRoute(
+                          //               builder: (context) => OrderReview(
+                          //                 recordActivity: widget.recordActivity,
+                          //                 selectDate: selectDate,
+                          //                 currentSelected: widget.currentSelected,
+                          //                 jsons: jsons,
+                          //               ),
+                          //             ),
+                          //           );
+                          //         }
+                          //       },
+                          //       child: Text(
+                          //         'Next',
+                          //         style: GoogleFonts.montserrat(
+                          //           fontWeight: FontWeight.bold,
+                          //           fontSize: 20,
+                          //           letterSpacing: 1.5,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: SizedBox(
+                            height: getProportionateScreenHeight(50),
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                  foregroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.white),
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                    const Color.fromARGB(255, 209, 209, 209),
+                                  ),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.zero,
+                                    ),
+                                  )),
+                              onPressed: () => Navigator.pop(context),
                               child: Text(
-                                "Back",
+                                'BACK',
                                 style: GoogleFonts.montserrat(
-                                    color: Colors.green,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 14),
+                                    color:
+                                        const Color.fromARGB(255, 0, 94, 172),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.sp),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                            height: getProportionateScreenHeight(50),
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                  foregroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.white),
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                    const Color.fromARGB(255, 0, 94, 172),
+                                  ),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.zero,
+                                    ),
+                                  )),
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => OrderReview(
+                                        jsons: jsons,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
+                              child: Text(
+                                'NEXT',
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.sp),
                               ),
                             ),
                           ),
                         ),
                       ],
                     ),
-                    Container(
-                      padding: EdgeInsets.all(20),
-                      width: double.infinity,
-                      color: Color.fromARGB(255, 219, 219, 219),
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: columnDynamic,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: getProportionateScreenHeight(20)),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: getProportionateScreenWidth(20),
-                          right: getProportionateScreenWidth(20)),
-                      child: SizedBox(
-                        height: getProportionateScreenHeight(50),
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.white),
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                const Color.fromARGB(255, 0, 94, 172),
-                              ),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.zero,
-                                ),
-                              )),
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => OrderReview(
-                                    recordActivity: widget.recordActivity,
-                                    selectDate: selectDate,
-                                    currentSelected: widget.currentSelected,
-                                    jsons: jsons,
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                          child: Text(
-                            'Next',
-                            style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              letterSpacing: 1.5,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: getProportionateScreenHeight(20)),
                   ],
                 ),
               ),

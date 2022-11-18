@@ -8,6 +8,7 @@ class HttpAuth {
   static Future<http.Response> postApi({jsons, url}) async {
     try {
       final jsonBody = json.encode(jsons);
+      print(jsonBody);
       http.Response response = await http.post(
         Uri.parse('$apiUrl$url'),
         body: jsonBody,

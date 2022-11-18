@@ -39,11 +39,20 @@ dependencies:
   percent_indicator: ^4.2.2
   email_validator: ^2.0.1
   awesome_dialog: ^2.2.1
-  webview_flutter: ^3.0.4
+  #webview_flutter: ^3.0.4
   url_launcher: ^6.1.5
-  webview_flutter_web: ^0.1.0+4
+  #webview_flutter_web: ^0.1.0+4
   syncfusion_flutter_pdf: ^20.2.43
   json_annotation: ^4.6.0
+  url_strategy: ^0.2.0
+  pdf: ^3.8.2
+  open_file: ^3.2.1
+  intl: ^0.17.0
+  nanoid: ^1.0.0
+  responsive_sizer: ^3.1.0
+  font_awesome_flutter: ^10.2.1
+  get: ^4.6.5
+  badges: ^2.0.3
   #path: ^1.8.2
   #meta: ^1.8.0
 
