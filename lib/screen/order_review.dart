@@ -99,7 +99,7 @@ class _OrderReviewState extends State<OrderReview> {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      "(${element["currentSelected"].shiftName} - ${time24to12Format(element["currentSelected"].startTime)} to ${time24to12Format(element["currentSelected"].endTime)})",
+                      "(${element["currentSelected"].shiftName})",
                       style: GoogleFonts.montserrat(
                         textStyle: TextStyle(
                           color: Colors.black,
@@ -173,13 +173,34 @@ class _OrderReviewState extends State<OrderReview> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SizedBox(height: 5),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.green,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "${element["currentSelected"].shiftName}",
+                          style: GoogleFonts.montserrat(
+                            textStyle: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 12.sp,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
                     Text(
                       element["recordActivity"].activityName,
                       style: GoogleFonts.montserrat(
                         textStyle: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w700,
-                          fontSize: 15.sp,
+                          fontSize: 13.sp,
                         ),
                       ),
                     ),
@@ -190,114 +211,6 @@ class _OrderReviewState extends State<OrderReview> {
                         textStyle: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w400,
-                          fontSize: 15.sp,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      "(${element["currentSelected"].shiftName} - ${time24to12Format(element["currentSelected"].startTime)} to ${time24to12Format(element["currentSelected"].endTime)})",
-                      style: GoogleFonts.montserrat(
-                        textStyle: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 15.sp,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Row(
-                      children: [
-                        Text(
-                          element["personToJoin"].toString(),
-                          style: GoogleFonts.montserrat(
-                            textStyle: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.sp,
-                            ),
-                          ),
-                        ),
-                        Icon(
-                          FontAwesomeIcons.person,
-                          size: 20.sp,
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          "RM $doublePrices",
-                          style: GoogleFonts.montserrat(
-                            textStyle: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.sp,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 10),
-              Container(
-                height: 0.1.h,
-                width: double.infinity,
-                color: Colors.black,
-              ),
-            ],
-          );
-        },
-      ).toList()
-    ];
-  }
-
-  List<Column> viewForWeb() {
-    return [
-      ...counterController.listStoreCart.map(
-        (element) {
-          double prices =
-              double.parse(element["recordActivity"].activityPrice) *
-                  element["personToJoin"];
-          String doublePrices = prices.toStringAsFixed(2);
-          totalAllPrice += double.parse(doublePrices);
-          return Column(
-            children: [
-              Container(
-                height: 16.h,
-                margin: EdgeInsets.only(left: 3.w, right: 3.w, top: 3.h),
-                width: double.infinity,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      element["recordActivity"].activityName,
-                      style: GoogleFonts.montserrat(
-                        textStyle: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 15.sp,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      DateFormat('dd/MM/yyyy').format(element["selectDate"]),
-                      style: GoogleFonts.montserrat(
-                        textStyle: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12.sp,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      "(${element["currentSelected"].shiftName} - ${time24to12Format(element["currentSelected"].startTime)} to ${time24to12Format(element["currentSelected"].endTime)})",
-                      style: GoogleFonts.montserrat(
-                        textStyle: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.normal,
                           fontSize: 12.sp,
                         ),
                       ),
@@ -348,6 +261,143 @@ class _OrderReviewState extends State<OrderReview> {
     ];
   }
 
+  List<Column> viewForWeb() {
+    return [
+      ...counterController.listStoreCart.map(
+        (element) {
+          double prices =
+              double.parse(element["recordActivity"].activityPrice) *
+                  element["personToJoin"];
+          String doublePrices = prices.toStringAsFixed(2);
+          totalAllPrice += double.parse(doublePrices);
+          return Column(
+            children: [
+              Container(
+                height: 16.h,
+                margin: EdgeInsets.only(left: 3.w, right: 3.w, top: 3.h),
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 5),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.green,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "${element["currentSelected"].shiftName}",
+                          style: GoogleFonts.montserrat(
+                            textStyle: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 12.sp,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      element["recordActivity"].activityName,
+                      style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 13.sp,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      DateFormat('dd/MM/yyyy').format(element["selectDate"]),
+                      style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12.sp,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Row(
+                      children: [
+                        Text(
+                          element["personToJoin"].toString(),
+                          style: GoogleFonts.montserrat(
+                            textStyle: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13.sp,
+                            ),
+                          ),
+                        ),
+                        Icon(
+                          FontAwesomeIcons.person,
+                          size: 16.sp,
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          "RM $doublePrices",
+                          style: GoogleFonts.montserrat(
+                            textStyle: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13.sp,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                height: 0.1.h,
+                width: double.infinity,
+                color: Colors.black,
+              ),
+            ],
+          );
+        },
+      ).toList()
+    ];
+  }
+
+  conditionMarginPhone() {
+    double width = MediaQuery.of(context).size.width;
+    if (width >= 1200) {
+      return EdgeInsets.only(
+        top: 5.h,
+        bottom: 5.h,
+        left: 30.w,
+        right: 30.w,
+      );
+    } else {
+      switch (Device.screenType) {
+        case ScreenType.mobile:
+          return EdgeInsets.only(
+            top: 5.h,
+            bottom: 5.h,
+            left: getProportionateScreenWidth(30),
+            right: getProportionateScreenWidth(30),
+          );
+
+        default:
+          return EdgeInsets.only(
+            top: 5.h,
+            bottom: 5.h,
+            left: getProportionateScreenWidth(30),
+            right: getProportionateScreenWidth(30),
+          );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -370,16 +420,12 @@ class _OrderReviewState extends State<OrderReview> {
           width: double.infinity,
         ),
         Container(
-          margin: EdgeInsets.only(
-            top: 5.h,
-            bottom: 5.h,
-            left: 10.w,
-            right: 10.w,
-          ),
+          margin: conditionMarginPhone(),
           child: Scaffold(
             body: SafeArea(
               child: ListView(
                 children: [
+                  const SizedBox(height: 20),
                   Stack(
                     children: [
                       Container(
@@ -393,15 +439,15 @@ class _OrderReviewState extends State<OrderReview> {
                               flex: 2,
                               child: Center(
                                 child: CircularPercentIndicator(
-                                  radius: 40.0,
-                                  lineWidth: 4.0,
+                                  radius: 7.h,
+                                  lineWidth: 6.0,
                                   animation: false,
                                   percent: 1,
-                                  center: const Text(
+                                  center: Text(
                                     "2 of 2",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 14.0),
+                                        fontSize: 16.sp),
                                   ),
                                   circularStrokeCap: CircularStrokeCap.round,
                                   progressColor: Colors.blue,
@@ -419,19 +465,9 @@ class _OrderReviewState extends State<OrderReview> {
                                       "Ticket Review",
                                       style: GoogleFonts.montserrat(
                                           color: Colors.black,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 16),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16.sp),
                                     ),
-                                    // Text(
-                                    //   "${widget.recordActivity.activityName}",
-                                    //   style: GoogleFonts.montserrat(
-                                    //     textStyle: const TextStyle(
-                                    //       color: Colors.black,
-                                    //       fontWeight: FontWeight.w500,
-                                    //       fontSize: 12,
-                                    //     ),
-                                    //   ),
-                                    // ),
                                   ],
                                 ),
                               ),
@@ -439,32 +475,34 @@ class _OrderReviewState extends State<OrderReview> {
                           ],
                         ),
                       ),
-                      Positioned(
-                        top: getProportionateScreenHeight(10),
-                        right: getProportionateScreenWidth(10),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: SafeArea(
-                            child: Text(
-                              "Back",
-                              style: GoogleFonts.montserrat(
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14),
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Positioned(
+                      //   top: getProportionateScreenHeight(10),
+                      //   right: getProportionateScreenWidth(10),
+                      //   child: GestureDetector(
+                      //     onTap: () {
+                      //       Navigator.pop(context);
+                      //     },
+                      //     child: SafeArea(
+                      //       child: Text(
+                      //         "Back",
+                      //         style: GoogleFonts.montserrat(
+                      //             color: Colors.green,
+                      //             fontWeight: FontWeight.w600,
+                      //             fontSize: 14),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
+                  const SizedBox(height: 20),
                   Container(
-                    height: getProportionateScreenHeight(35),
+                    height: getProportionateScreenHeight(10),
                     width: double.infinity,
                     color: Color.fromARGB(255, 228, 228, 228),
                     child: SizedBox(),
                   ),
+                  const SizedBox(height: 20),
                   Container(
                     margin: EdgeInsets.all(getProportionateScreenHeight(20)),
                     width: double.infinity,
@@ -496,7 +534,7 @@ class _OrderReviewState extends State<OrderReview> {
                     ),
                   ),
                   Container(
-                    height: getProportionateScreenHeight(35),
+                    height: getProportionateScreenHeight(10),
                     width: double.infinity,
                     color: const Color.fromARGB(255, 228, 228, 228),
                     child: const SizedBox(),
@@ -526,9 +564,15 @@ class _OrderReviewState extends State<OrderReview> {
                               fontSize: 30),
                         ),
                         SizedBox(height: getProportionateScreenHeight(30)),
-                        SizedBox(
+                      ],
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: SizedBox(
                           height: getProportionateScreenHeight(50),
-                          width: getProportionateScreenWidth(200),
+                          width: double.infinity,
                           child: ElevatedButton(
                             style: ButtonStyle(
                                 foregroundColor:
@@ -536,7 +580,7 @@ class _OrderReviewState extends State<OrderReview> {
                                         Colors.white),
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(
-                                  Colors.red,
+                                  const Color.fromARGB(255, 209, 209, 209),
                                 ),
                                 shape: MaterialStateProperty.all<
                                     RoundedRectangleBorder>(
@@ -544,7 +588,37 @@ class _OrderReviewState extends State<OrderReview> {
                                     borderRadius: BorderRadius.zero,
                                   ),
                                 )),
-                            onPressed: () async {
+                            onPressed: () => Navigator.pop(context),
+                            child: Text(
+                              'BACK',
+                              style: GoogleFonts.montserrat(
+                                  color: const Color.fromARGB(255, 0, 94, 172),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.sp),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: SizedBox(
+                          height: getProportionateScreenHeight(50),
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                                foregroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.white),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                  const Color.fromARGB(255, 0, 94, 172),
+                                ),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.zero,
+                                  ),
+                                )),
+                            onPressed: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -556,18 +630,15 @@ class _OrderReviewState extends State<OrderReview> {
                               );
                             },
                             child: Text(
-                              'PAY NOW',
+                              'Pay Now',
                               style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                letterSpacing: 1.5,
-                              ),
+                                  fontWeight: FontWeight.bold, fontSize: 16.sp),
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                  )
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

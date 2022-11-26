@@ -37,7 +37,7 @@ class BadgeCart extends StatelessWidget {
             dialogType: DialogType.WARNING,
             body: Center(
               child: Text(
-                'Ops, you dont have any add to cart.',
+                'Ops, your cart is empty.',
                 style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.normal, fontSize: 16),
                 textAlign: TextAlign.center,

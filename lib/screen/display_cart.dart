@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,6 +11,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../utils/convert24hours.dart';
 import '../widget/badge_cart.dart';
+import '../widget/question_answer.dart';
 import 'form_attendee.dart';
 
 class DisplayAddToCart extends StatefulWidget {
@@ -87,6 +89,8 @@ class _DisplayAddToCartState extends State<DisplayAddToCart> {
           child: Row(
             children: const [
               Spacer(),
+              QuestionAnswer(),
+              SizedBox(width: 20),
               BadgeCart(),
             ],
           ),
@@ -146,13 +150,34 @@ class _DisplayAddToCartState extends State<DisplayAddToCart> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                const SizedBox(height: 5),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.green,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "${element["currentSelected"].shiftName}",
+                                      style: GoogleFonts.montserrat(
+                                        textStyle: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 12.sp,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
                                 Text(
                                   element["recordActivity"].activityName,
                                   style: GoogleFonts.montserrat(
                                     textStyle: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w700,
-                                      fontSize: 15.sp,
+                                      fontSize: 13.sp,
                                     ),
                                   ),
                                 ),
@@ -164,17 +189,6 @@ class _DisplayAddToCartState extends State<DisplayAddToCart> {
                                     textStyle: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 12.sp,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                Text(
-                                  "(${element["currentSelected"].shiftName} - ${time24to12Format(element["currentSelected"].startTime)} to ${time24to12Format(element["currentSelected"].endTime)})",
-                                  style: GoogleFonts.montserrat(
-                                    textStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
                                       fontSize: 12.sp,
                                     ),
                                   ),
@@ -376,13 +390,34 @@ class _DisplayAddToCartState extends State<DisplayAddToCart> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                const SizedBox(height: 5),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.green,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "${element["currentSelected"].shiftName}",
+                                      style: GoogleFonts.montserrat(
+                                        textStyle: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 12.sp,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
                                 Text(
                                   element["recordActivity"].activityName,
                                   style: GoogleFonts.montserrat(
                                     textStyle: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w700,
-                                      fontSize: 15.sp,
+                                      fontSize: 13.sp,
                                     ),
                                   ),
                                 ),
@@ -394,18 +429,7 @@ class _DisplayAddToCartState extends State<DisplayAddToCart> {
                                     textStyle: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 15.sp,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                Text(
-                                  "(${element["currentSelected"].shiftName} - ${time24to12Format(element["currentSelected"].startTime)} to ${time24to12Format(element["currentSelected"].endTime)})",
-                                  style: GoogleFonts.montserrat(
-                                    textStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15.sp,
+                                      fontSize: 12.sp,
                                     ),
                                   ),
                                 ),
@@ -418,13 +442,13 @@ class _DisplayAddToCartState extends State<DisplayAddToCart> {
                                         textStyle: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 18.sp,
+                                          fontSize: 13.sp,
                                         ),
                                       ),
                                     ),
                                     Icon(
                                       FontAwesomeIcons.person,
-                                      size: 20.sp,
+                                      size: 16.sp,
                                     ),
                                     const SizedBox(width: 10),
                                     Text(
@@ -433,7 +457,7 @@ class _DisplayAddToCartState extends State<DisplayAddToCart> {
                                         textStyle: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 18.sp,
+                                          fontSize: 13.sp,
                                         ),
                                       ),
                                     ),
@@ -538,7 +562,7 @@ class _DisplayAddToCartState extends State<DisplayAddToCart> {
                       return Column(
                         children: [
                           Container(
-                            height: 12.h,
+                            height: 16.h,
                             margin: EdgeInsets.only(
                                 left: 3.w, right: 3.w, top: 3.h),
                             width: double.infinity,
@@ -546,13 +570,34 @@ class _DisplayAddToCartState extends State<DisplayAddToCart> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                const SizedBox(height: 5),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.green,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "${element["currentSelected"].shiftName}",
+                                      style: GoogleFonts.montserrat(
+                                        textStyle: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 12.sp,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
                                 Text(
                                   element["recordActivity"].activityName,
                                   style: GoogleFonts.montserrat(
                                     textStyle: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w700,
-                                      fontSize: 16.sp,
+                                      fontSize: 13.sp,
                                     ),
                                   ),
                                 ),
@@ -564,18 +609,7 @@ class _DisplayAddToCartState extends State<DisplayAddToCart> {
                                     textStyle: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 15.sp,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                Text(
-                                  "(${element["currentSelected"].shiftName} - ${time24to12Format(element["currentSelected"].startTime)} to ${time24to12Format(element["currentSelected"].endTime)})",
-                                  style: GoogleFonts.montserrat(
-                                    textStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15.sp,
+                                      fontSize: 12.sp,
                                     ),
                                   ),
                                 ),
@@ -588,13 +622,13 @@ class _DisplayAddToCartState extends State<DisplayAddToCart> {
                                         textStyle: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 18.sp,
+                                          fontSize: 13.sp,
                                         ),
                                       ),
                                     ),
                                     Icon(
                                       FontAwesomeIcons.person,
-                                      size: 20.sp,
+                                      size: 16.sp,
                                     ),
                                     const SizedBox(width: 10),
                                     Text(
@@ -603,7 +637,7 @@ class _DisplayAddToCartState extends State<DisplayAddToCart> {
                                         textStyle: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 18.sp,
+                                          fontSize: 13.sp,
                                         ),
                                       ),
                                     ),
@@ -660,7 +694,7 @@ class _DisplayAddToCartState extends State<DisplayAddToCart> {
                               ],
                             ),
                           ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 10),
                           Container(
                             height: 0.1.h,
                             width: double.infinity,

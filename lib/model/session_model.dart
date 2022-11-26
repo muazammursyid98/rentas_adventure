@@ -1,67 +1,73 @@
 // To parse this JSON data, do
 //
-//     final sessionTime = sessionTimeFromJson(jsonString);
+//     final listSessionRecords = listSessionRecordsFromJson(jsonString);
 
 import 'dart:convert';
 
-SessionTime sessionTimeFromJson(String str) =>
-    SessionTime.fromJson(json.decode(str));
+ListSessionRecords listSessionRecordsFromJson(String str) =>
+    ListSessionRecords.fromJson(json.decode(str));
 
-String sessionTimeToJson(SessionTime data) => json.encode(data.toJson());
+String listSessionRecordsToJson(ListSessionRecords data) =>
+    json.encode(data.toJson());
 
-class SessionTime {
-  SessionTime({
-    this.records,
+class ListSessionRecords {
+  ListSessionRecords({
+    this.listSessionRecords,
     this.message,
     this.reason,
   });
 
-  List<Session>? records;
+  List<ListSessionRecord>? listSessionRecords;
   String? message;
   String? reason;
 
-  factory SessionTime.fromJson(Map<String, dynamic> json) => SessionTime(
-        records: json["records"] == null
-            ? null
-            : List<Session>.from(
-                json["records"].map((x) => Session.fromJson(x))),
+  factory ListSessionRecords.fromJson(Map<String, dynamic> json) =>
+      ListSessionRecords(
+        listSessionRecords: List<ListSessionRecord>.from(
+            json["listSessionRecords"]
+                .map((x) => ListSessionRecord.fromJson(x))),
         message: json["message"],
         reason: json["reason"],
       );
 
   Map<String, dynamic> toJson() => {
-        "records": records == null
-            ? null
-            : List<dynamic>.from(records!.map((x) => x.toJson())),
+        "listSessionRecords":
+            List<dynamic>.from(listSessionRecords!.map((x) => x.toJson())),
         "message": message,
         "reason": reason,
       };
 }
 
-class Session {
-  Session({
-    this.shiftId,
-    this.shiftName,
-    this.startTime,
-    this.endTime,
-  });
+class ListSessionRecord {
+  ListSessionRecord(
+      {this.activitiesSessionId,
+      this.activitiesId,
+      this.shiftActivitiesId,
+      this.timeDescription,
+      this.shiftName});
 
-  int? shiftId;
+  String? activitiesSessionId;
+  String? activitiesId;
+  String? shiftActivitiesId;
+  String? timeDescription;
   String? shiftName;
-  String? startTime;
-  String? endTime;
 
-  factory Session.fromJson(Map<String, dynamic> json) => Session(
-        shiftId: int.parse(json["shiftId"]),
+  factory ListSessionRecord.fromJson(Map<String, dynamic> json) =>
+      ListSessionRecord(
+        activitiesSessionId: json["activitiesSessionId"],
+        activitiesId: json["activitiesId"],
+        shiftActivitiesId: json["shiftActivitiesId"],
+        timeDescription:
+            json["timeDescription"] == null || json["timeDescription"] == ""
+                ? ""
+                : Uri.decodeComponent(json["timeDescription"]),
         shiftName: json["shiftName"],
-        startTime: json["startTime"],
-        endTime: json["endTime"],
       );
 
   Map<String, dynamic> toJson() => {
-        "shiftId": shiftId,
-        "shiftName": shiftName,
-        "startTime": startTime,
-        "endTime": endTime,
+        "activitiesSessionId": activitiesSessionId,
+        "activitiesId": activitiesId,
+        "shiftActivitiesId": shiftActivitiesId,
+        "timeDescription": timeDescription,
       };
 }

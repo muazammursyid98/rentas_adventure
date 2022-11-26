@@ -43,7 +43,7 @@ class _PaymentGatewayState extends State<PaymentGateway> {
         "activitiesId": element["recordActivity"].activityId,
         "totalBookedSlot": element["personToJoin"].toString(),
         "dateSlot": element["selectDate"].toString(),
-        "shiftSlotId": element["currentSelected"].shiftId,
+        "shiftSlotId": element["currentSelected"].shiftActivitiesId,
       };
       listOfActivitiesBooked.add(jsonsByItemBooked);
     }

@@ -27,17 +27,20 @@ class Activity {
 }
 
 class Record {
-  Record({
-    this.activityId,
-    this.activityName,
-    this.activityAvailable,
-    this.activityLocation,
-    this.activityAsset,
-    this.activityPrice,
-  });
+  Record(
+      {this.activityId,
+      this.activityName,
+      this.shortDescription,
+      this.packageIclusive,
+      this.activityAvailable,
+      this.activityLocation,
+      this.activityAsset,
+      this.activityPrice});
 
   String? activityId;
   String? activityName;
+  String? shortDescription;
+  String? packageIclusive;
   String? activityAvailable;
   String? activityLocation;
   String? activityAsset;
@@ -46,9 +49,28 @@ class Record {
   factory Record.fromJson(Map<String, dynamic> json) => Record(
         activityId: json["activityId"],
         activityName: json["activityName"],
-        activityAvailable: json["activityAvailable"],
+        shortDescription:
+            json["shortDescription"] == null || json["shortDescription"] == ""
+                ? ""
+                : Uri.decodeComponent(json["shortDescription"]),
+        packageIclusive:
+            json["packageIclusive"] == null || json["packageIclusive"] == ""
+                ? ""
+                : Uri.decodeComponent(json["packageIclusive"]),
+        activityAvailable: json["activityAvailable"] == null
+            ? null
+            : json["activityAvailable"],
         activityLocation: json["activityLocation"],
         activityAsset: json["activityAsset"],
         activityPrice: json["activityPrice"],
       );
+
+  Map<String, dynamic> toJson() => {
+        "activityId": activityId,
+        "activityName": activityName,
+        "activityAvailable":
+            activityAvailable == null ? null : activityAvailable,
+        "activityLocation": activityLocation,
+        "activityAsset": activityAsset,
+      };
 }

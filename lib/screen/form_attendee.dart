@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:rentas_adventure/screen/order_review.dart';
 import 'package:rentas_adventure/utils/size_config.dart';
+import 'package:rentas_adventure/widget/agree_screen.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../model/activity_model.dart';
@@ -42,6 +43,13 @@ class _FormAttendeeScreenState extends State<FormAttendeeScreen> {
     super.initState();
 
     dynamicView();
+    Future.delayed(const Duration(milliseconds: 500), () async {
+      showDialog(
+          context: context,
+          builder: (_) {
+            return AgreeScreen();
+          });
+    });
   }
 
   void dynamicView() {
@@ -81,8 +89,8 @@ class _FormAttendeeScreenState extends State<FormAttendeeScreen> {
           style: GoogleFonts.montserrat(
             textStyle: TextStyle(
               color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 18.sp,
+              fontWeight: FontWeight.w600,
+              fontSize: 14.sp,
             ),
           ),
         ),
@@ -147,8 +155,8 @@ class _FormAttendeeScreenState extends State<FormAttendeeScreen> {
           style: GoogleFonts.montserrat(
             textStyle: TextStyle(
               color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 18.sp,
+              fontWeight: FontWeight.w600,
+              fontSize: 14.sp,
             ),
           ),
         ),
@@ -201,6 +209,36 @@ class _FormAttendeeScreenState extends State<FormAttendeeScreen> {
     );
   }
 
+  conditionMarginPhone() {
+    double width = MediaQuery.of(context).size.width;
+    if (width >= 1200) {
+      return EdgeInsets.only(
+        top: 5.h,
+        bottom: 5.h,
+        left: 30.w,
+        right: 30.w,
+      );
+    } else {
+      switch (Device.screenType) {
+        case ScreenType.mobile:
+          return EdgeInsets.only(
+            top: 5.h,
+            bottom: 5.h,
+            left: getProportionateScreenWidth(30),
+            right: getProportionateScreenWidth(30),
+          );
+
+        default:
+          return EdgeInsets.only(
+            top: 5.h,
+            bottom: 5.h,
+            left: getProportionateScreenWidth(30),
+            right: getProportionateScreenWidth(30),
+          );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -223,12 +261,7 @@ class _FormAttendeeScreenState extends State<FormAttendeeScreen> {
           width: double.infinity,
         ),
         Container(
-          margin: EdgeInsets.only(
-            top: 5.h,
-            bottom: 5.h,
-            left: 10.w,
-            right: 10.w,
-          ),
+          margin: conditionMarginPhone(),
           child: Scaffold(
             body: SafeArea(
               child: Scrollbar(
@@ -240,6 +273,7 @@ class _FormAttendeeScreenState extends State<FormAttendeeScreen> {
                     Expanded(
                       child: ListView(
                         children: [
+                          const SizedBox(height: 20),
                           Stack(
                             children: [
                               Container(
@@ -282,7 +316,7 @@ class _FormAttendeeScreenState extends State<FormAttendeeScreen> {
                                               "Submission Attendee",
                                               style: GoogleFonts.montserrat(
                                                   color: Colors.black,
-                                                  fontWeight: FontWeight.w600,
+                                                  fontWeight: FontWeight.bold,
                                                   fontSize: 16.sp),
                                             ),
                                             // Text(
@@ -322,6 +356,7 @@ class _FormAttendeeScreenState extends State<FormAttendeeScreen> {
                               // ),
                             ],
                           ),
+                          const SizedBox(height: 30),
                           Container(
                             padding: EdgeInsets.all(20),
                             width: double.infinity,
