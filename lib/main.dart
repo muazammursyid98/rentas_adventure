@@ -133,7 +133,6 @@ class _MyHomePageState extends State<MyHomePage> {
   initCall() async {
     Future.delayed(const Duration(seconds: 5), () async {
       callApi();
-
       widget.statusId != "" ? await callApiPayment() : null;
     });
   }
@@ -192,9 +191,16 @@ class _MyHomePageState extends State<MyHomePage> {
         String customerPhoneNumber = listOrder.phoneNumber!;
         String customerTotalPrice = listOrder.totalPrice!;
         String invoiceNumber = listOrder.invoiceNumber!;
-        String emailCustomer = listOrder.emailCustomer!;
-        // generateInvoice(customerName, customerPhoneNumber, customerTotalPrice,
-        //     customerTotalBooked, invoiceNumber, emailCustomer);
+        // String emailCustomer = listOrder.emailCustomer!;
+        String emailCustomer = "muazammursyid@gmail.com";
+        generateInvoice(
+          customerName: customerName,
+          customerPhoneNumber: customerPhoneNumber,
+          customerTotalPrice: customerTotalPrice,
+          invoiceNumber: invoiceNumber,
+          emailCustomer: emailCustomer,
+          listOrder: listOrder,
+        );
         AwesomeDialog(
           width: checkConditionWidth(),
           bodyHeaderDistance: 60,
@@ -272,8 +278,14 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  generateInvoice(customerName, customerPhoneNumber, customerTotalPrice,
-      customerTotalBooked, invoiceNumber, emailCustomer) async {
+  generateInvoice({
+    customerName,
+    customerPhoneNumber,
+    customerTotalPrice,
+    invoiceNumber,
+    emailCustomer,
+    ListOrder? listOrder,
+  }) async {
     final date = DateTime.now();
     final dueDate = date.add(const Duration(days: 7));
 
@@ -281,7 +293,7 @@ class _MyHomePageState extends State<MyHomePage> {
       supplier: Supplier(
         name: customerName,
         address: customerPhoneNumber,
-        paymentInfo: 'https://rentasadventures.com/flutter/',
+        paymentInfo: 'https://rentasadventures.com/ticket/',
       ),
       customer: const Customer(
         name: 'Adren x Park Tickets',
@@ -291,17 +303,20 @@ class _MyHomePageState extends State<MyHomePage> {
       info: InvoiceInfo(
         date: date,
         dueDate: dueDate,
-        description: 'My description...',
+        description: '',
         number: invoiceNumber,
       ),
       items: [
-        InvoiceItem(
-          description: 'Adult',
-          date: DateTime.now(),
-          quantity: int.parse(customerTotalBooked),
-          vat: 0,
-          unitPrice: 200.00,
-        ),
+        ...listOrder!.listOrder!.map((ListOrderElement element) {
+          return InvoiceItem(
+            description: '${element.activityName}\n(${element.shiftName})',
+            date: DateTime.parse(element.bookedDate!),
+            quantity: int.parse(element.totalBookedSlot!),
+            vat: 0,
+            unitPrice: double.parse(element.totalPrice!) /
+                double.parse(element.totalBookedSlot!),
+          );
+        }).toList(),
       ],
     );
 
@@ -316,16 +331,19 @@ class _MyHomePageState extends State<MyHomePage> {
       pdfFileBase64,
       invoiceNumber,
       emailCustomer,
+      customerName,
     );
     // PdfApi.openFile(pdfFile);
   }
 
-  emailToCustomer(pdfFileBase64, invoiceNumber, emailCustomer) async {
+  emailToCustomer(
+      pdfFileBase64, invoiceNumber, emailCustomer, customerName) async {
     var jsons = {
       "authKey": "key123",
       "base64Pdf": pdfFileBase64,
       "invoiceNumber": invoiceNumber,
       "emailCustomer": emailCustomer,
+      "nameCustomer": customerName
     };
     debugPrint('movieTitle: $jsons');
     await HttpAuth.postApi(jsons: jsons, url: 'email/index.php')

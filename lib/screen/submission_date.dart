@@ -167,6 +167,10 @@ class _SubmissionDateState extends State<SubmissionDate> {
   }
 
   incrementPerson() {
+    var value = checkValidation();
+    if (value == null) {
+      return;
+    }
     if (availableSlot == 0 && isActivityGotSlot == true) {
       return;
     }
@@ -178,6 +182,10 @@ class _SubmissionDateState extends State<SubmissionDate> {
   }
 
   decrementPerson() {
+    var value = checkValidation();
+    if (value == null) {
+      return;
+    }
     if (personToJoin < 1) {
       return;
     }
@@ -188,11 +196,62 @@ class _SubmissionDateState extends State<SubmissionDate> {
     setDisplaySlotValue(availableSlot.toString());
   }
 
+  int? checkValidation() {
+    if (currentChoose == 0) {
+      AwesomeDialog(
+        width: checkConditionWidth(),
+        bodyHeaderDistance: 60,
+        context: context,
+        animType: AnimType.BOTTOMSLIDE,
+        dialogType: DialogType.WARNING,
+        body: Center(
+          child: Text(
+            'Please select session time',
+            style: GoogleFonts.montserrat(
+              fontWeight: FontWeight.normal,
+              fontSize: 16,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        title: '',
+        desc: '',
+        btnOkOnPress: () {},
+      ).show();
+      return null;
+    }
+
+    if (availableSlot == 0 && currentSelected != null && personToJoin < 1) {
+      AwesomeDialog(
+        width: checkConditionWidth(),
+        bodyHeaderDistance: 60,
+        context: context,
+        animType: AnimType.BOTTOMSLIDE,
+        dialogType: DialogType.INFO,
+        body: Center(
+          child: Text(
+            'Sorry this session already full. Thank you',
+            style: GoogleFonts.montserrat(
+              fontWeight: FontWeight.normal,
+              fontSize: 16,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        title: '',
+        desc: '',
+        btnOkOnPress: () {},
+      ).show();
+      return null;
+    }
+    return -1;
+  }
+
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: selectDate!,
-        firstDate: DateTime(2015, 8),
+        firstDate: DateTime.now(),
         lastDate: DateTime(2101));
     if (picked != null && picked != selectDate) {
       selectDate = picked;
@@ -670,53 +729,8 @@ class _SubmissionDateState extends State<SubmissionDate> {
             width: getProportionateScreenWidth(60),
             child: InkWell(
               onTap: () {
-                if (currentChoose == 0) {
-                  AwesomeDialog(
-                    width: checkConditionWidth(),
-                    bodyHeaderDistance: 60,
-                    context: context,
-                    animType: AnimType.BOTTOMSLIDE,
-                    dialogType: DialogType.WARNING,
-                    body: Center(
-                      child: Text(
-                        'Please select session time',
-                        style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.normal,
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    title: '',
-                    desc: '',
-                    btnOkOnPress: () {},
-                  ).show();
-                  return;
-                }
-
-                if (availableSlot == 0 &&
-                    currentSelected != null &&
-                    personToJoin < 1) {
-                  AwesomeDialog(
-                    width: checkConditionWidth(),
-                    bodyHeaderDistance: 60,
-                    context: context,
-                    animType: AnimType.BOTTOMSLIDE,
-                    dialogType: DialogType.INFO,
-                    body: Center(
-                      child: Text(
-                        'Sorry this session already full. Thank you',
-                        style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.normal,
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    title: '',
-                    desc: '',
-                    btnOkOnPress: () {},
-                  ).show();
+                var value = checkValidation();
+                if (value == null) {
                   return;
                 }
                 if (personToJoin == 0) {
@@ -742,20 +756,38 @@ class _SubmissionDateState extends State<SubmissionDate> {
                   ).show();
                   return;
                 }
-                counterController.valueCart.value =
-                    counterController.valueCart.value + 1;
 
-                var customLengthId = nanoid(3);
+                List getValue = counterController.listStoreCart
+                    .where((element) =>
+                        DateFormat('yyyy-MM-dd')
+                                .format(element["selectDate"]) ==
+                            DateFormat('yyyy-MM-dd').format(selectDate!) &&
+                        element["recordActivity"].activityId ==
+                            widget.recordActivity.activityId &&
+                        element["currentSelected"]
+                                .shiftActivitiesId
+                                .toString() ==
+                            currentSelected!.shiftActivitiesId.toString())
+                    .toList();
 
-                var jsonsInsert = {
-                  "id": customLengthId,
-                  "recordActivity": widget.recordActivity,
-                  "selectDate": selectDate!,
-                  "personToJoin": personToJoin,
-                  "currentSelected": currentSelected,
-                };
+                if (getValue.isEmpty) {
+                  counterController.valueCart.value =
+                      counterController.valueCart.value + 1;
 
-                counterController.listStoreCart.add(jsonsInsert);
+                  var customLengthId = nanoid(3);
+
+                  var jsonsInsert = {
+                    "id": customLengthId,
+                    "recordActivity": widget.recordActivity,
+                    "selectDate": selectDate!,
+                    "personToJoin": personToJoin,
+                    "currentSelected": currentSelected,
+                  };
+
+                  counterController.listStoreCart.add(jsonsInsert);
+                } else {
+                  getValue[0]["personToJoin"] += personToJoin;
+                }
 
                 AwesomeDialog(
                   width: checkConditionWidth(),

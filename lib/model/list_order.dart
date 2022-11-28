@@ -66,6 +66,7 @@ class ListOrderElement {
     this.totalBookedSlot,
     this.totalPrice,
     this.shiftName,
+    this.bookedDate,
   });
 
   String? activityId;
@@ -73,6 +74,7 @@ class ListOrderElement {
   String? totalBookedSlot;
   String? totalPrice;
   String? shiftName;
+  String? bookedDate;
 
   factory ListOrderElement.fromJson(Map<String, dynamic> json) =>
       ListOrderElement(
@@ -81,6 +83,7 @@ class ListOrderElement {
         totalBookedSlot: json["totalBookedSlot"],
         totalPrice: json["totalPrice"],
         shiftName: json["shiftName"],
+        bookedDate: json["bookedDate"],
       );
 
   Map<String, dynamic> toJson() => {

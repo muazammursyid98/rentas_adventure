@@ -39,11 +39,17 @@ class _PaymentGatewayState extends State<PaymentGateway> {
 
     List listOfActivitiesBooked = [];
     for (var element in counterController.listStoreCart) {
+      String doublePrices = "";
+      double prices = double.parse(element["recordActivity"].activityPrice) *
+          element["personToJoin"];
+      doublePrices = prices.toStringAsFixed(2);
+
       var jsonsByItemBooked = {
         "activitiesId": element["recordActivity"].activityId,
         "totalBookedSlot": element["personToJoin"].toString(),
         "dateSlot": element["selectDate"].toString(),
         "shiftSlotId": element["currentSelected"].shiftActivitiesId,
+        "totalPrice": doublePrices,
       };
       listOfActivitiesBooked.add(jsonsByItemBooked);
     }
